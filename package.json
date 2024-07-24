@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "fmt": "prettier --write .",
-    "lint": "eslint \"src/**/*.ts*\"",
+    "lint": "eslint \"api/**/*.ts*\"",
     "type": "tsc --noEmit"
   },
   "dependencies": {

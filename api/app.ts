@@ -13,8 +13,7 @@ const TEST_COMMAND = {
 
 const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${config.DISCORD_CID}&scope=applications.commands`;
 
-module.exports = async (request, response) => {
-  if (request.method === "POST") {
+export async function POST(request, response) {
     const signature = request.headers["x-signature-ed25519"];
     const timestamp = request.headers["x-signature-timestamp"];
     const rawBody = await getRawBody(request);
@@ -61,5 +60,4 @@ module.exports = async (request, response) => {
       console.error("Unknown Type");
       response.status(400).send({ error: "Unknown Type" });
     }
-  }
 };

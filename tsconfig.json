@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ESNext",
-    "outDir": "api",
+    "outDir": "dist",
     "sourceMap": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -20,6 +20,6 @@
   },
   "files": ["./.eslintrc.json"],
   "include": [
-    "src", "environment.d.ts"],
+    "api", "environment.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
