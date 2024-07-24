@@ -1,0 +1,35 @@
+{
+  "name": "vtx-tasks",
+  "description": "The official task manager of FTC team 15534 VERTEX",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "preview": "node dist/app.js",
+    "start": "ts-node src/app.ts",
+    "fmt": "prettier --write .",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.37.93",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.23.0",
+    "drizzle-orm": "^0.32.1",
+    "glob": "^7.2.0",
+    "tslib": "^2.6.3"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/eslint": "^8.56.10",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.3"
+  }
+}
