@@ -4,19 +4,16 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "preview": "node dist/app.js",
-    "start": "ts-node src/app.ts",
     "fmt": "prettier --write .",
     "lint": "eslint \"src/**/*.ts*\"",
     "type": "tsc --noEmit"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.93",
-    "discord.js": "^14.11.0",
+    "discord-interactions": "^4.0.0",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.23.0",
     "drizzle-orm": "^0.32.1",
-    "glob": "^7.2.0",
+    "raw-body": "^2.5.2",
     "tslib": "^2.6.3"
   },
   "devDependencies": {
@@ -28,8 +25,6 @@
     "@typescript-eslint/parser": "^7.7.1",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.3"
   }
 }
