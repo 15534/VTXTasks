@@ -2,62 +2,46 @@ import {
   InteractionResponseType,
   InteractionType,
   verifyKey,
-} from "discord-interactions";
-import getRawBody from "raw-body";
+} from 'discord-interactions';
+
+import commands from './commands';
 import { config } from './config';
 
-const TEST_COMMAND = {
-  name: "Test",
-  description: "Run a test command",
-};
+module.exports = async (request, response) => {
+  if (request.method === 'POST') {
+    const signature = request.headers['x-signature-ed25519'];
+    const timestamp = request.headers['x-signature-timestamp'];
 
-const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${config.DISCORD_CID}&scope=applications.commands`;
-
-export async function POST(request, response) {
-    const signature = request.headers["x-signature-ed25519"];
-    const timestamp = request.headers["x-signature-timestamp"];
-    const rawBody = await getRawBody(request);
+    const rawBody = JSON.stringify(request.body);
 
     const isValidRequest = verifyKey(
       rawBody,
       signature,
       timestamp,
-      config.DISCORD_TOKEN,
+      config.DISCORD_PID,
     );
 
     if (!isValidRequest) {
-      console.error("Invalid Request");
-      return response.status(401).send({ error: "Bad request signature " });
+      return response.status(401).send({ error: 'Invalid Request' });
     }
 
     const message = request.body;
 
     if (message.type === InteractionType.PING) {
-      console.log("Handling Ping request");
       response.send({
         type: InteractionResponseType.PONG,
       });
     } else if (message.type === InteractionType.APPLICATION_COMMAND) {
-      switch (message.data.name.toLowerCase()) {
-        case TEST_COMMAND.name.toLowerCase():
-          response.status(200).send({
-            type: 4,
-            data: {
-              content: INVITE_URL,
-              flags: 64,
-            },
-          });
+      const commandName = message.data.name.toLowerCase();
+      const command = commands[commandName as keyof typeof commands];
 
-          console.log("Test command request!");
-
-          break;
-        default:
-          console.error("Unknown Command");
-          response.status(400).send({ error: "Unknown Type" });
-          break;
+      if (command) {
+        response.status(200).send(command.response);
+      } else {
+        response.status(400).send({ error: 'Unknown Command' });
       }
     } else {
-      console.error("Unknown Type");
-      response.status(400).send({ error: "Unknown Type" });
+      response.status(400).send({ error: 'Unknown Type' });
     }
+  }
 };

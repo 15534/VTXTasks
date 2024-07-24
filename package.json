@@ -3,17 +3,19 @@
   "description": "The official task manager of FTC team 15534 VERTEX",
   "main": "app.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && ts-node api/deploy.ts",
     "fmt": "prettier --write .",
     "lint": "eslint \"api/**/*.ts*\"",
     "type": "tsc --noEmit"
   },
   "dependencies": {
-    "discord-interactions": "^4.0.0",
+    "discord-api-types": "^0.37.93",
+    "discord-interactions": "^2.0.2",
+    "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.23.0",
     "drizzle-orm": "^0.32.1",
-    "raw-body": "^2.5.2",
+    "ts-node": "^10.9.2",
     "tslib": "^2.6.3"
   },
   "devDependencies": {

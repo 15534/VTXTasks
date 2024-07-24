@@ -19,7 +19,6 @@
     }
   },
   "files": ["./.eslintrc.json"],
-  "include": [
-    "api", "environment.d.ts"],
+  "include": ["api", "environment.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
