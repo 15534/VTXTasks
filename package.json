@@ -4,6 +4,7 @@
   "main": "app.js",
   "scripts": {
     "migrate": "drizzle-kit push",
+    "studio": "drizzle-kit studio",
     "build": "tsc && ts-node api/deploy.ts",
     "fmt": "prettier --write .",
     "lint": "eslint \"api/**/*.ts*\"",

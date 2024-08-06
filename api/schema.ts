@@ -16,13 +16,12 @@ export const users = pgTable('user', {
 });
 
 export const userRelations = relations(users, ({ many }) => ({
-  assignments: many(tickets),
+  assignments: many(assignments),
   supervising: many(tickets),
 }));
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`),
-  userId: uuid('user_id'),
   supervisorId: uuid('supervisor_id'),
   type: ticketTypes('type'),
   subgroup: subgroups('subgroup'),
@@ -32,15 +31,26 @@ export const tickets = pgTable('ticket', {
 });
 
 export const ticketRelations = relations(tickets, ({ one, many }) => ({
-  assignee: many(users, {
-    fields: [tickets.userId],
-    references: [users.id],
-  }),
   supervisor: one(users, {
     fields: [tickets.supervisorId],
     references: [users.id],
   }),
+  assignments: many(assignments),
 }));
 
+export const assignments = pgTable('assignment', {
+  userId: uuid('user_id'),
+  ticketId: uuid('ticket_id'),
+})
 
+export const assignmentRelations = relations(assignments, ({ one }) => ({
+  user: one(users, {
+    fields: [assignments.userId],
+    references: [users.id],
+  }),
+  ticket: one(tickets, {
+    fields: [assignments.userId],
+    references: [tickets.id],
+  }),
+}));
 
