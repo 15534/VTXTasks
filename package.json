@@ -3,12 +3,14 @@
   "description": "The official task manager of FTC team 15534 VERTEX",
   "main": "app.js",
   "scripts": {
+    "migrate": "drizzle-kit push",
     "build": "tsc && ts-node api/deploy.ts",
     "fmt": "prettier --write .",
     "lint": "eslint \"api/**/*.ts*\"",
     "type": "tsc --noEmit"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.9.4",
     "discord-api-types": "^0.37.93",
     "discord-interactions": "^2.0.2",
     "discord.js": "^14.15.3",
