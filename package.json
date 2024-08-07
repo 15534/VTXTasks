@@ -13,7 +13,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^0.9.4",
     "discord-api-types": "^0.37.93",
-    "discord-interactions": "^2.0.2",
+    "discord-interactions": "^4.0.0",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.23.0",

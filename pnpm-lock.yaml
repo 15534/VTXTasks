@@ -12,8 +12,8 @@ dependencies:
     specifier: ^0.37.93
     version: 0.37.93
   discord-interactions:
-    specifier: ^2.0.2
-    version: 2.4.1
+    specifier: ^4.0.0
+    version: 4.0.0
   discord.js:
     specifier: ^14.15.3
     version: 14.15.3
@@ -1226,10 +1226,9 @@ packages:
     resolution: {integrity: sha512-M5jn0x3bcXk8EI2c6F6V6LeOWq10B/cJf+YJSyqNmg7z4bdXK+Z7g9zGJwHS0h9Bfgs0nun2LQISFOzwck7G9A==}
     dev: false
 
-  /discord-interactions@2.4.1:
-    resolution: {integrity: sha512-UPSfB47Pf4pn+qllp9hjUr5v+u45BZH9g+1dP4FxA1V4ngRV7hkDSdU2LR8drIPreJAHENPWYdd8rvWPtrdK1Q==}
-    dependencies:
-      tweetnacl: 1.0.3
+  /discord-interactions@4.0.0:
+    resolution: {integrity: sha512-27HSJ379W9E4T6Or+efQRGnekJ6g8kYokSFtK5HKc/3ObC+83O+vxdg2trStD/2XPIHVPMNVIoZAeK9s/EL8Yg==}
+    engines: {node: '>=18.4.0'}
     dev: false
 
   /discord.js@14.15.3:
@@ -2147,10 +2146,6 @@ packages:
 
   /tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
-    dev: false
-
-  /tweetnacl@1.0.3:
-    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
     dev: false
 
   /type-check@0.4.0:
