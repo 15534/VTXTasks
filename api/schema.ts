@@ -38,12 +38,13 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`),
-  supervisorId: uuid('supervisor_id'),
   type: ticketTypes('type'),
   subgroup: subgroups('subgroup'),
-  status: statuses('status'),
-  priority: integer('priority'),
+  title: varchar('title', { length: 128 }),
   description: varchar('description', { length: 2048 }),
+  priority: integer('priority'),
+  status: statuses('status'),
+  supervisorId: uuid('supervisor_id'),
 });
 
 export const ticketRelations = relations(tickets, ({ one, many }) => ({
