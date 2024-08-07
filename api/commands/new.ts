@@ -16,11 +16,20 @@ export const getResponse = () => {
           type: 1,
           components: [
             {
-              type: MessageComponentTypes.INPUT_TEXT,
-              style: TextStyleTypes.SHORT,
+              type: MessageComponentTypes.STRING_SELECT,
               label: 'Short Input',
               custom_id: 'short-input',
               placeholder: 'Short Input',
+              options: [
+                {
+                  label: 'Option 1',
+                  value: 'option1',
+                },
+                {
+                  label: 'Option 2',
+                  value: 'option2',
+                }
+              ]
             },
           ],
         },
