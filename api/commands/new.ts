@@ -176,14 +176,16 @@ export const getResponse = async (message) => {
     priority,
     status: 'not started',
     supervisorId
-  }).returning())._.returning.id;
+  }).returning());
 
-  for (const assignee in assignees) {
-    await db.insert(assignments).values({
-      userId: assignee,
-      ticketId: ticketId
-    }).returning();
-  }
+  console.log(ticketId);
+
+  // for (const assignee in assignees) {
+  //   await db.insert(assignments).values({
+  //     userId: assignee,
+  //     ticketId: ticketId
+  //   }).returning();
+  // }
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
