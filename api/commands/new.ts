@@ -37,14 +37,14 @@ export const data = {
       max_values: 15,
     },
     {
-      type: MessageComponentTypes.INPUT_TEXT,
+      type: MessageComponentTypes.STRING_SELECT,
       label: "title",
       custom_id: "title",
       required: true,
       style: TextInputStyles.SHORT,
     },
     {
-      type: MessageComponentTypes.INPUT_TEXT,
+      type: MessageComponentTypes.STRING_SELECT,
       label: "description",
       custom_id: "description",
       required: true,
