@@ -16,6 +16,8 @@ export const getResponse = async (message) => {
 
   const db = await GetDb();
 
+  console.log(id)
+
   db.delete(users).where(eq(users.id, id));
 
   return {
