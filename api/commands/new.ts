@@ -34,7 +34,7 @@ export const data = {
       custom_id: "assignees",
       description: "Members responsible for the task",
       required: true,
-      max_values: 15,
+      max_length: 15,
     },
     {
       type: MessageComponentTypes.STRING,
