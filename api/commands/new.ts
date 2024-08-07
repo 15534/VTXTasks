@@ -43,6 +43,8 @@ export const data = {
       label: "title",
       custom_id: "title",
       required: true,
+      min_length: 1,
+      max_length: 128,
       style: TextInputStyles.SHORT,
     },
     {
@@ -51,6 +53,8 @@ export const data = {
       description: "Task description",
       label: "description",
       custom_id: "description",
+      min_length: 1,
+      max_length: 2048,
       required: true,
       style: TextInputStyles.PARAGRAPH,
     },
