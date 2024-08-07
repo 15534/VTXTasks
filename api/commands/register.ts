@@ -7,7 +7,7 @@ import { users } from '../schema';
 
 export const data = {
   name: 'register',
-  description: 'Add yourself as a member',
+  description: 'Add yourself to the member list',
   options: [
     {
       type: MessageComponentTypes.STRING,
