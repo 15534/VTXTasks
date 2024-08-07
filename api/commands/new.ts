@@ -41,6 +41,57 @@ export const getResponse = () => {
             },
           ],
         },
+        {
+          type: 1,
+          components: [
+            {
+              type: MessageComponentTypes.MENTIONABLE_SELECT,
+              max_values: 25,
+              custom_id: 'assignees',
+              placeholder: 'Assignee(s)',
+            },
+          ],
+        },
+        // {
+        //   type: 1,
+        //   components: [
+        //     {
+        //       type: MessageComponentTypes.INPUT_TEXT,
+        //       style: TextStyleTypes.SHORT,
+        //       label: 'Title',
+        //       custom_id: 'title',
+        //       placeholder: 'Title',
+        //     },
+        //   ],
+        // },
+        // {
+        //   type: 1,
+        //   components: [
+        //     {
+        //       type: MessageComponentTypes.INPUT_TEXT,
+        //       style: TextStyleTypes.SHORT,
+        //       label: 'Title',
+        //       custom_id: 'title',
+        //       placeholder: 'Title',
+        //       min_length: 1,
+        //       max_length: 128,
+        //     },
+        //   ],
+        // },
+        // {
+        //   type: 1,
+        //   components: [
+        //     {
+        //       type: MessageComponentTypes.INPUT_TEXT,
+        //       style: TextStyleTypes.PARAGRAPH,
+        //       label: 'Description',
+        //       custom_id: 'description',
+        //       placeholder: 'Description',
+        //       min_length: 1,
+        //       max_length: 2048,
+        //     },
+        //   ],
+        // },
       ],
     },
   };
