@@ -1,4 +1,4 @@
-import { InteractionResponseType, MessageComponentTypes, TextStyleTypes, ActionRow } from 'discord-interactions';
+import { InteractionResponseType, MessageComponentTypes, TextStyleTypes } from 'discord-interactions';
 
 export const data = {
   name: 'new',
@@ -9,11 +9,22 @@ export const getResponse = () => {
   return {
     type: InteractionResponseType.MODAL,
     data: {
-      title: 'New Ticket',
-      custom_id: 'new-ticket',
+      title: 'Test',
+      custom_id: 'test-modal',
       components: [
-     
-      ]
+        {
+          type: 1,
+          components: [
+            {
+              type: MessageComponentTypes.INPUT_TEXT,
+              style: TextStyleTypes.SHORT,
+              label: 'Short Input',
+              custom_id: 'short-input',
+              placeholder: 'Short Input',
+            },
+          ],
+        },
+      ],
     },
   };
 };
