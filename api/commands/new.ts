@@ -7,7 +7,7 @@ export const data = {
 
 export const getResponse = () => {
   return {
-    type: InteractionResponseType.MODAL,
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       title: 'Test',
       custom_id: 'test-modal',
