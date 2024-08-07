@@ -35,11 +35,7 @@ module.exports = async (request, response) => {
       const commandName = message.data.name.toLowerCase();
       const command = commands[commandName as keyof typeof commands];
 
-      if (command) {
-        response.status(200).send(command.response);
-      } else {
-        response.status(400).send({ error: 'Unknown Command' });
-      }
+      response.status(200).send(command.response);
     } else {
       response.status(400).send({ error: 'Unknown Type' });
     }

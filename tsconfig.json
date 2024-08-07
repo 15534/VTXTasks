@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strictNullChecks": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "paths": {

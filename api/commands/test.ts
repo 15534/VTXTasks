@@ -8,6 +8,6 @@ export const data = {
 export const response = {
   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
   data: {
-    content: 'Working!'
+    content: 'Working!',
   },
 };
