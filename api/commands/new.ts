@@ -9,9 +9,10 @@ export const data = {
   description: "Create a new ticket",
   options: [
     {
+      type: MessageComponentTypes.STRING_SELECT,
       name: "type",
       description: "Task type",
-      type: MessageComponentTypes.STRING_SELECT,
+      required: true,
       choices: [
         'feature',
         'fix',
