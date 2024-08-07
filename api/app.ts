@@ -36,8 +36,6 @@ module.exports = async (request, response) => {
       const command = commands[commandName as keyof typeof commands];
 
       response.status(200).send(command.getResponse());
-    } else if (message.type === InteractionType.MESSAGE_COMPONENT) {
-      console.log(message)
     } else {
       response.status(400).send({ error: 'Unknown Type' });
     }
