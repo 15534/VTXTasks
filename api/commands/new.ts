@@ -45,7 +45,7 @@ export const getResponse = () => {
           type: MessageComponentTypes.ACTION_ROW,
           components: [
             {
-              type: MessageComponentTypes.ROLE_SELECT,
+              type: MessageComponentTypes.USER_SELECT,
               max_values: 25,
               custom_id: 'assignees',
               placeholder: 'Assignee(s)',
