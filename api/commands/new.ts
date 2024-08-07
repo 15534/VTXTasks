@@ -13,8 +13,8 @@ export const data = {
 export const getResponse = () => {
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    flags: InteractionResponseFlags.EPHEMERAL,
     data: {
+      flags: InteractionResponseFlags.EPHEMERAL,
       components: [
         {
           type: 1,
