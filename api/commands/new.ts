@@ -4,6 +4,7 @@ import {
   MessageComponentTypes,
   TextStyleTypes
 } from 'discord-interactions';
+import { ticketTypes } from '../schema';
 
 export const data = {
   name: 'new',
@@ -21,19 +22,22 @@ export const getResponse = () => {
           components: [
             {
               type: MessageComponentTypes.STRING_SELECT,
-              label: 'Short Input',
-              custom_id: 'short-input',
-              placeholder: 'Short Input',
+              custom_id: 'ticket-type',
+              placeholder: 'Ticket Type',
               options: [
-                {
-                  label: 'Option 1',
-                  value: 'option1',
-                },
-                {
-                  label: 'Option 2',
-                  value: 'option2',
-                }
-              ]
+                'Feature',
+                'Fix',
+                'Product',
+                'Part',
+                'Documentation',
+                'Media',
+                'Other',
+              ].map((type) => {
+                return {
+                  label: type,
+                  value: type.toLowerCase(),
+                };
+              })
             },
           ],
         },
@@ -41,23 +45,53 @@ export const getResponse = () => {
           type: 1,
           components: [
             {
-              type: MessageComponentTypes.STRING_SELECT,
-              label: 'Short Input',
-              custom_id: 'fds-input',
-              placeholder: 'Short Input',
-              options: [
-                {
-                  label: 'Option 1',
-                  value: 'option1',
-                },
-                {
-                  label: 'Option 2',
-                  value: 'option2',
-                }
-              ]
+              type: MessageComponentTypes.MENTIONABLE_SELECT,
+              max_values: 25,
+              custom_id: 'assignees',
+              placeholder: 'Assignee(s)',
             },
           ],
         },
+        {
+          type: 1,
+          components: [
+            {
+              type: MessageComponentTypes.INPUT_TEXT,
+              style: TextStyleTypes.SHORT,
+              label: 'Title',
+              custom_id: 'title',
+              placeholder: 'Title',
+            },
+          ],
+        },
+        {
+          type: 1,
+          components: [
+            {
+              type: MessageComponentTypes.INPUT_TEXT,
+              style: TextStyleTypes.SHORT,
+              label: 'Title',
+              custom_id: 'title',
+              placeholder: 'Title',
+              min_length: 1,
+              max_length: 128,
+            },
+          ],
+        },
+        // {
+        //   type: 1,
+        //   components: [
+        //     {
+        //       type: MessageComponentTypes.INPUT_TEXT,
+        //       style: TextStyleTypes.PARAGRAPH,
+        //       label: 'Description',
+        //       custom_id: 'description',
+        //       placeholder: 'Description',
+        //       min_length: 1,
+        //       max_length: 2048,
+        //     },
+        //   ],
+        // },
       ],
     },
   };

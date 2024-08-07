@@ -6,6 +6,7 @@ export const subgroups = pgEnum('subgroup', [
   'programming',
   'outreach',
 ]);
+
 export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 
 export const ticketTypes = pgEnum('ticket_type', [
@@ -17,6 +18,7 @@ export const ticketTypes = pgEnum('ticket_type', [
   'media',
   'other',
 ]);
+
 export const statuses = pgEnum('status', [
   'not started',
   'in progress',
