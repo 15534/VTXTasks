@@ -18,7 +18,7 @@ export const getResponse = () => {
       flags: InteractionResponseFlags.EPHEMERAL,
       components: [
         {
-          type: 1,
+          type: MessageComponentTypes.ACTION_ROW,
           components: [
             {
               type: MessageComponentTypes.STRING_SELECT,
@@ -42,7 +42,7 @@ export const getResponse = () => {
           ],
         },
         {
-          type: 1,
+          type: MessageComponentTypes.ACTION_ROW,
           components: [
             {
               type: MessageComponentTypes.MENTIONABLE_SELECT,
@@ -52,22 +52,22 @@ export const getResponse = () => {
             },
           ],
         },
-        {
-          type: 1,
-          components: [
-            {
-              type: MessageComponentTypes.INPUT_TEXT,
-              style: TextStyleTypes.SHORT,
-              label: 'Title',
-              custom_id: 'title',
-              placeholder: 'Title',
-              // min_length: 1,
-              max_length: 128,
-            },
-          ],
-        },
         // {
-        //   type: 1,
+        //   type: MessageComponentTypes.ACTION_ROW,
+        //   components: [
+        //     {
+        //       type: MessageComponentTypes.INPUT_TEXT,
+        //       style: TextStyleTypes.SHORT,
+        //       label: 'Title',
+        //       custom_id: 'title',
+        //       placeholder: 'Title',
+        //       min_length: 1,
+        //       max_length: 128,
+        //     },
+        //   ],
+        // },
+        // {
+        //   type: MessageComponentTypes.ACTION_ROW,
         //   components: [
         //     {
         //       type: MessageComponentTypes.INPUT_TEXT,
