@@ -2,9 +2,7 @@ import {
   InteractionResponseFlags,
   InteractionResponseType,
   MessageComponentTypes,
-  TextStyleTypes
 } from 'discord-interactions';
-import { ticketTypes } from '../schema';
 
 export const data = {
   name: 'new',
