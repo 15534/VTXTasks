@@ -34,11 +34,11 @@ export const statuses = pgEnum('status', [
 ]);
 
 export const users = pgTable('user', {
-  id: uuid('id').default(sql`gen_random_uuid()`),
+  id: varchar('id').primaryKey(),
   email: varchar('email', { length: 128 }).unique(),
   username: varchar('username', { length: 128 }).unique(),
-  role: roles('role'),
-  subgroup: subgroups('subgroup'),
+  role: roles('role').notNull(),
+  subgroup: subgroups('subgroup').notNull(),
 });
 
 export const userRelations = relations(users, ({ many }) => ({
@@ -48,14 +48,13 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`),
-  type: types
-('type'),
-  subgroup: subgroups('subgroup'),
-  title: varchar('title', { length: 128 }),
-  description: varchar('description', { length: 2048 }),
-  priority: priorities('priority'),
-  status: statuses('status'),
-  supervisorId: uuid('supervisor_id'),
+  type: types('type').notNull(),
+  subgroup: subgroups('subgroup').notNull(),
+  title: varchar('title', { length: 128 }).notNull(),
+  description: varchar('description', { length: 2048 }).notNull(),
+  priority: priorities('priority').notNull(),
+  status: statuses('status').notNull(),
+  supervisorId: uuid('supervisor_id').notNull(),
 });
 
 export const ticketRelations = relations(tickets, ({ one, many }) => ({
