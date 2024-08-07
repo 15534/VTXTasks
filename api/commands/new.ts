@@ -102,9 +102,7 @@ export const getResponse = async (message) => {
   const db = GetDb();
 
   assignees.shift();
-
-  console.log(assignees);
-
+  
   for (const assignee in assignees) {
     const user = await db.query.users.findFirst({
       where: eq(users.id, assignee),
@@ -113,6 +111,8 @@ export const getResponse = async (message) => {
         subgroup: true,
       }
     });
+
+    console.log(assignee, user)
 
     if (!user) {
       return {
