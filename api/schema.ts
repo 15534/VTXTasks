@@ -14,7 +14,6 @@ export const types = pgEnum('ticket_type', [
   'fix',
   'part',
   'documentation',
-  'product',
   'media',
   'other',
 ]);

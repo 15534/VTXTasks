@@ -21,7 +21,6 @@ export const data = {
         'fix',
         'part',
         'documentation',
-        'product',
         'media',
         'other'
       ].map((type) => {
@@ -115,6 +114,7 @@ export const getResponse = async (message) => {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
+          flags: InteractionResponseFlags.EPHEMERAL,
           content: 'Unknown assignee!'
         }
       };
@@ -136,6 +136,7 @@ export const getResponse = async (message) => {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
+          flags: InteractionResponseFlags.EPHEMERAL,
           content: 'Assignees must be in the same subgroup!'
         }
       };
@@ -166,6 +167,7 @@ export const getResponse = async (message) => {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
+        flags: InteractionResponseFlags.EPHEMERAL,
         content: 'No supervisor found!'
       }
     };
