@@ -33,8 +33,9 @@ export const data = {
       name: "assignees",
       custom_id: "assignees",
       description: "Members responsible for the task",
+      min_values: 2,
+      max_values: 10,
       required: true,
-      max_length: 15,
     },
     {
       type: MessageComponentTypes.STRING,
