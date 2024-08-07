@@ -15,7 +15,7 @@ export const getResponse = async (message) => {
   const id = message.member.user.id;
 
   const db = await GetDb();
-  
+
   await db.delete(users).where(eq(users.id, id));
 
   return {
