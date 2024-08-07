@@ -8,3 +8,8 @@ export enum MessageComponentTypes {
   MENTIONABLE_SELECT = 9,
   CHANNEL_SELECT = 8,
 }
+
+export enum TextInputStyles {
+  SHORT = 1,
+  PARAGRAPH = 2,
+}

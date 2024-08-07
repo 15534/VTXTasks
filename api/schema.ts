@@ -9,7 +9,7 @@ export const subgroups = pgEnum('subgroup', [
 
 export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 
-export const ticketTypes = pgEnum('ticket_type', [
+export const types = pgEnum('ticket_type', [
   'feature',
   'fix',
   'part',
@@ -17,6 +17,14 @@ export const ticketTypes = pgEnum('ticket_type', [
   'product',
   'media',
   'other',
+]);
+
+export const priorities = pgEnum('priority', [
+  'extreme',
+  'high',
+  'medium',
+  'low',
+  'minimal',
 ]);
 
 export const statuses = pgEnum('status', [
@@ -40,11 +48,12 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`),
-  type: ticketTypes('type'),
+  type: types
+('type'),
   subgroup: subgroups('subgroup'),
   title: varchar('title', { length: 128 }),
   description: varchar('description', { length: 2048 }),
-  priority: integer('priority'),
+  priority: priorities('priority'),
   status: statuses('status'),
   supervisorId: uuid('supervisor_id'),
 });
