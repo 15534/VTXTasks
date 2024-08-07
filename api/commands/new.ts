@@ -61,47 +61,17 @@ export const data = {
       description: "Task priority",
       required: true,
       choices: [
-        {
-          name: "extreme",
-          value: "extreme",
-          emoji: {
-            id: null,
-            name: "bangbang"
-          }
-        },
-        {
-          name: "high",
-          value: "high",
-          emoji: {
-            id: null,
-            name: "exclamation"
-          }
-        },
-        {
-          name: "medium",
-          value: "medium",
-          emoji: {
-            id: null,
-            name: "chart_with_upwards_trend"
-          }
-        },
-        {
-          name: "low",
-          value: "low",
-          emoji: {
-            id: null,
-            name: "feather"
-          }
-        },
-        {
-          name: "minimal",
-          value: "minimal",
-          emoji: {
-            id: null,
-            name: "sleeping"
-          }
-        }
-      ]
+        'extreme',
+        'high',
+        'medium',
+        'low',
+        'minimal',
+      ].map((priority) => {
+        return {
+          name: priority,
+          value: priority,
+        };
+      })
     },
   ]
 };
