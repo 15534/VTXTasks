@@ -80,7 +80,9 @@ export const data = {
   ]
 };
 
-export const getResponse = () => {
+export const getResponse = (message) => {
+  console.log(message)
+  
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
