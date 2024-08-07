@@ -31,6 +31,12 @@ export const getResponse = () => {
                 }
               ]
             },
+            {
+              type: MessageComponentTypes.ROLE_SELECT,
+              label: 'Short Input',
+              custom_id: 'short-input',
+              placeholder: 'Short Input',
+            },
           ],
         },
       ],
