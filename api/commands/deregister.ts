@@ -15,10 +15,8 @@ export const getResponse = async (message) => {
   const id = message.member.user.id;
 
   const db = await GetDb();
-
-  console.log(id)
-
-  db.delete(users).where(eq(users.id, id));
+  
+  await db.delete(users).where(eq(users.id, id));
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
