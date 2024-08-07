@@ -1,7 +1,5 @@
 import {
-  InteractionResponseFlags,
   InteractionResponseType,
-  MessageComponentTypes,
 } from 'discord-interactions';
 
 export const data = {
@@ -9,7 +7,7 @@ export const data = {
   description: "Create a new ticket",
   options: [
     {
-      type: MessageComponentTypes.STRING_SELECT,
+      type: 3,
       name: "type",
       description: "Task type",
       required: true,
