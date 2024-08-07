@@ -29,13 +29,15 @@ export const data = {
       })
     },
     {
-      type: MessageComponentTypes.MENTIONABLE_SELECT,
+      type: MessageComponentTypes.STRING,
       name: "assignees",
+      description: "Task assignees",
+      label: "assignees",
       custom_id: "assignees",
-      description: "Members responsible for the task",
-      min_values: 2,
-      max_values: 10,
       required: true,
+      min_length: 1,
+      max_length: 256,
+      style: TextInputStyles.SHORT,
     },
     {
       type: MessageComponentTypes.STRING,
