@@ -1,4 +1,9 @@
-import { InteractionResponseType, MessageComponentTypes, TextStyleTypes } from 'discord-interactions';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+  MessageComponentTypes,
+  TextStyleTypes
+} from 'discord-interactions';
 
 export const data = {
   name: 'new',
@@ -8,9 +13,8 @@ export const data = {
 export const getResponse = () => {
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    flags: InteractionResponseFlags.EPHEMERAL,
     data: {
-      title: 'Test',
-      custom_id: 'test-modal',
       components: [
         {
           type: 1,
