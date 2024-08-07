@@ -38,6 +38,8 @@ export const data = {
     },
     {
       type: MessageComponentTypes.INPUT_TEXT,
+      name: "title",
+      description: "Task title",
       label: "title",
       custom_id: "title",
       required: true,
@@ -45,6 +47,8 @@ export const data = {
     },
     {
       type: MessageComponentTypes.INPUT_TEXT,
+      name: "description",
+      description: "Task description",
       label: "description",
       custom_id: "description",
       required: true,
