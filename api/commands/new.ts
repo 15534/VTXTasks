@@ -12,29 +12,7 @@ export const getResponse = () => {
       title: 'New Ticket',
       custom_id: 'new-ticket',
       components: [
-        {
-          type: MessageComponentTypes.ACTION_ROW,
-          components: [
-            {
-              type: MessageComponentTypes.STRING_SELECT,
-              custom_id: 'subgroup-select',
-              options: [
-                {
-                  label: 'Mechanical',
-                  value: 'mechanical',
-                },
-                {
-                  label: 'Programming',
-                  value: 'programming',
-                },
-                {
-                  label: 'Outreach',
-                  value: 'outreach',
-                },
-              ]
-            },
-          ],
-        }
+     
       ]
     },
   };
