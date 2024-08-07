@@ -1,13 +1,13 @@
 import { relations, sql } from 'drizzle-orm';
-import { integer, pgEnum, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
+
+export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 
 export const subgroups = pgEnum('subgroup', [
   'mechanical',
   'programming',
   'outreach',
 ]);
-
-export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 
 export const types = pgEnum('ticket_type', [
   'feature',

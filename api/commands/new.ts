@@ -4,7 +4,7 @@ import {
 } from 'discord-interactions';
 import { GetDb, MessageComponentTypes, TextInputStyles } from '../util';
 import { and, eq } from 'drizzle-orm';
-import { assignments, tickets, users } from '../schema';
+import { tickets, users } from '../schema';
 
 export const data = {
   name: 'new',
@@ -95,16 +95,17 @@ export const getResponse = async (message) => {
   const description = input[3].value;
   const priority = input[4].value;
 
+  type Subgroup = 'mechanical' | 'programming' | 'outreach'
+
   let role = 'member';
-  let subgroup = '';
+  let subgroup: Subgroup | null = null;
 
   const db = GetDb();
 
   for (const assignee in assignees) {
     const user = await db.query.users.findFirst({
       where: eq(users.id, assignee),
-      with: {
-        id: true,
+      columns: {
         role: true,
         subgroup: true,
       }
@@ -127,8 +128,8 @@ export const getResponse = async (message) => {
       role = 'lead';
     }
 
-    if (subgroup == '') {
-      subgroup = user.subgroup;
+    if (!subgroup) {
+      subgroup = user.subgroup as Subgroup;
     }
 
     if (subgroup != user.subgroup) {
@@ -141,19 +142,21 @@ export const getResponse = async (message) => {
     }
   }
 
+  subgroup = subgroup as Subgroup;
+
   let supervisorId;
 
   if (role == 'member') {
     supervisorId = (await db.query.users.findFirst({
       where: and(eq(users.role, 'lead'), eq(users.subgroup, subgroup)),
-      with: {
+      columns: {
         id: true
       }
     }))?.id;
   } else {
     supervisorId = (await db.query.users.findFirst({
       where: eq(users.role, 'captain'),
-      with: {
+      columns: {
         id: true
       }
     }))?.id;
