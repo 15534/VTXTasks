@@ -17,8 +17,6 @@ export async function deploy(guildId) {
         body: data,
       },
     );
-
-    console.log('Successfully reloaded application commands');
   } catch (error) {
     console.error(error);
   }
@@ -33,8 +31,6 @@ client.once('ready', () => {
 });
 
 client.once('guildAvailable', async (guild) => {
-  console.log('Deploying commands');
-
   await deploy(guild.id);
 
   process.exit();

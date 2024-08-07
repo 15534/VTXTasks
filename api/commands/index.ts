@@ -1,5 +1,5 @@
-import * as test from './test';
+import * as create from './new';
 
 export default {
-  test,
+  new: create,
 };
