@@ -33,9 +33,9 @@ export const getResponse = () => {
             },
             {
               type: MessageComponentTypes.ROLE_SELECT,
-              label: 'Short Input',
-              custom_id: 'short-input',
-              placeholder: 'Short Input',
+              label: 'fdsa',
+              custom_id: 'gr-input',
+              placeholder: 'fdsa Input',
             },
           ],
         },
