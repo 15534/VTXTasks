@@ -12,9 +12,9 @@ export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 export const ticketTypes = pgEnum('ticket_type', [
   'feature',
   'fix',
-  'product',
   'part',
   'documentation',
+  'product',
   'media',
   'other',
 ]);
