@@ -1,6 +1,6 @@
 export enum MessageComponentTypes {
   STRING_SELECT = 3,
-  INPUT_TEXT = 4,
+  INPUT_TEXT = 2,
   MENTIONABLE_SELECT = 9,
 }
 
