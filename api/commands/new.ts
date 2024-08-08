@@ -11,7 +11,7 @@ import {
   TASK_CHANNEL,
   TextInputStyles
 } from '../utils';
-import { and, asc, desc, eq, ne } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
 
@@ -116,7 +116,7 @@ export const getResponse = async (message) => {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = assignees[i];
 
-    if (assignee === MEDIA_ID){
+    if (assignee === MEDIA_ID) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -126,7 +126,7 @@ export const getResponse = async (message) => {
       }
     }
 
-    if (assignee === PROGRAMMING_AFFILIATE_ID){
+    if (assignee === PROGRAMMING_AFFILIATE_ID) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -136,7 +136,7 @@ export const getResponse = async (message) => {
       }
     }
 
-    if (assignee === MECHANICAL_AFFILIATE_ID){
+    if (assignee === MECHANICAL_AFFILIATE_ID) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -254,12 +254,20 @@ export const getResponse = async (message) => {
     };
   }
 
-  const accessId = (await db.query.tickets.findMany({
+  const ticketAccessIds = await db.query.tickets.findMany({
     columns: {
       accessId: true
     },
     orderBy: desc(tickets.accessId)
-  }))[0]?.accessId + 1 ?? 1;
+  });
+
+  let accessId;
+
+  if (!tickets) {
+    accessId = 1;
+  } else {
+    accessId = tickets[0].accessId + 1;
+  }
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
