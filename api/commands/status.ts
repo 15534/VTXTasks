@@ -87,24 +87,24 @@ export const getResponse = async (message) => {
     }
   }
 
-  let assigned = false;
-
-  for (let i = 0; i < ticket.assignments.length; i++) {
-    if (ticket.assignments[i].userId === message.member.user.id) {
-      assigned = true;
-      break;
-    }
-  }
-
-  if (!assigned) {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        flags: InteractionResponseFlags.EPHEMERAL,
-        content: 'You do not have access to this ticket!'
-      }
-    }
-  }
+  // let assigned = false;
+  //
+  // for (let i = 0; i < ticket.assignments.length; i++) {
+  //   if (ticket.assignments[i].userId === message.member.user.id) {
+  //     assigned = true;
+  //     break;
+  //   }
+  // }
+  //
+  // if (!assigned) {
+  //   return {
+  //     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  //     data: {
+  //       flags: InteractionResponseFlags.EPHEMERAL,
+  //       content: 'You do not have access to this ticket!'
+  //     }
+  //   }
+  // }
 
   await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages/${ticket.messageId}`, {
     method: 'DELETE',
