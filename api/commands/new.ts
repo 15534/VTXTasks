@@ -178,7 +178,7 @@ export const getResponse = async (message) => {
     };
   }
 
-  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
+  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
   const accessIds = await db.query.tickets.findMany({
     where: ne(tickets.status, 'completed'),
