@@ -263,10 +263,9 @@ export const getResponse = async (message) => {
 
   let accessId: number;
 
-  if (!tickets) {
+  if (ticketAccessIds.length === 0) {
     accessId = 1;
   } else {
-    console.log(tickets)
     accessId = tickets[0].accessId + 1;
   }
 
