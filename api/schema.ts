@@ -1,5 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
-import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { randomUUID } from 'node:crypto';
 
 export const roles = pgEnum('role', ['captain', 'lead', 'member']);
@@ -48,6 +48,7 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`).primaryKey(),
+  accessId: integer('access_id').notNull(),
   messageId: varchar('message_id').unique().notNull(),
   type: types('type').notNull(),
   subgroup: subgroups('subgroup').notNull(),

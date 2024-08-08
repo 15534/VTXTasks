@@ -3,7 +3,7 @@ import {
   InteractionResponseType
 } from 'discord-interactions';
 import { GetDb, MessageComponentTypes, TASK_CHANNEL, TextInputStyles } from '../utils';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, ne } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
 
@@ -216,7 +216,34 @@ export const getResponse = async (message) => {
     })
   }).then((res) => res.json()).then((res: { id: string }) => res.id);
 
+  const accessIds = await db.query.tickets.findMany({
+    where: {
+      status: ne('completed')
+    },
+    columns: {
+      accessId: true
+    },
+    orderBy: {
+      accessId: 'asc'
+    }
+  });
+
+  let accessId = 0;
+
+  for (let i = 0; i < accessIds.length; i++) {
+    if (accessIds[i].accessId != i + 1) {
+      accessId = i;
+
+      break;
+    }
+  }
+
+  if (accessId === 0) {
+    accessId = accessIds.length + 1;
+  }
+
   const [ticket] = await db.insert(tickets).values({
+    accessId,
     messageId,
     type,
     subgroup,
