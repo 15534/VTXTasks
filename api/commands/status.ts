@@ -74,16 +74,6 @@ export const getResponse = async (message) => {
     }
   }
 
-  if (ticket.status === 'completed') {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        flags: InteractionResponseFlags.EPHEMERAL,
-        content: 'Ticket is already completed!'
-      }
-    }
-  }
-
   const assigned = await db.query.assignments.findFirst({
     where: and(
       eq(assignments.ticketId, ticket.id),
@@ -129,7 +119,7 @@ export const getResponse = async (message) => {
   let content = `The following ticket status has been updated to **${status}**:`;
 
   if (status === 'in review') {
-    content = `T<@${ticket.supervisorId}> please review the following ticket:`;
+    content = `<@${ticket.supervisorId}> please review the following ticket:`;
   }
 
   if (status === 'completed') {
@@ -146,7 +136,7 @@ export const getResponse = async (message) => {
       content,
       embeds: [
         {
-          title: `**ID ${accessId}** ${ticket.title}`,
+          title: `${status === 'completed' && '**ID ${accessId}**'}${ticket.title}`,
           description: ticket.description,
           color: embedColor,
           timestamp: new Date().toISOString(),
