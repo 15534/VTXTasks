@@ -11,7 +11,7 @@ import {
   TASK_CHANNEL,
   TextInputStyles
 } from '../utils';
-import { and, asc, eq, ne } from 'drizzle-orm';
+import { and, asc, desc, eq, ne } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
 
@@ -121,7 +121,7 @@ export const getResponse = async (message) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'The media role cannot be assigned a task.'
+          content: 'Media cannot be assigned a task.'
         }
       }
     }
@@ -141,7 +141,7 @@ export const getResponse = async (message) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'The mechanical affiliate role cannot be assigned tasks.'
+          content: 'The mechanical affiliate r cannot be assigned tasks.'
         }
       }
     }
@@ -253,6 +253,13 @@ export const getResponse = async (message) => {
       }
     };
   }
+
+  const accessId = (await db.query.tickets.findMany({
+    columns: {
+      accessId: true
+    },
+    orderBy: desc(tickets.accessId)
+  }))[0] + 1;
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
