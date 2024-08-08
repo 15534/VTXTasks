@@ -219,7 +219,7 @@ export const getResponse = async (message) => {
     })
   })
 
-  console.log(response.json())
+  console.log(await response.json())
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
