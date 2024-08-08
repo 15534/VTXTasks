@@ -5,6 +5,7 @@ import {
 import { GetDb, MessageComponentTypes, TextInputStyles } from '../util';
 import { and, eq } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
+import { config } from '../config';
 
 export const data = {
   name: 'new',
@@ -191,10 +192,32 @@ export const getResponse = async (message) => {
     const assignee = assignees[i];
 
     await db.insert(assignments).values({
-      userId: assignee,
-      ticketId: ticket.id
+      ticketId: ticket.id,
+      userId: assignee
     }).returning();
   }
+
+  await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
+    method: 'POST',
+    headers: {
+      'Context-Type': 'application/json',
+      'Authorization': `Bearer ${config.DISCORD_TOKEN}`
+    },
+    body: JSON.stringify({
+      embeds: [
+        {
+          title: "New Ticket Created",
+          description: "A new ticket has been successfully created.",
+          color: 5814783,
+          fields: [
+            { name: "Title", value: "Ticket Title Here", inline: true },
+            { name: "Priority", value: "High", inline: true }
+          ],
+          timestamp: new Date().toISOString()
+        }
+      ]
+    })
+  })
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
