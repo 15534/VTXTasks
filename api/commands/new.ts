@@ -197,7 +197,7 @@ export const getResponse = async (message) => {
     });
   }
 
-  const assigneeList = assignees.map((id) => `<@${id}>`).join(', ');
+  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
   const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
     method: 'POST',
