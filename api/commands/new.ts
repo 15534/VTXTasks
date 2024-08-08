@@ -222,6 +222,7 @@ export const getResponse = async (message) => {
     },
     columns: {
       accessId: true
+      status: true
     },
     orderBy: {
       accessId: 'asc'
