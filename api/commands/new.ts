@@ -185,8 +185,9 @@ export const getResponse = async (message) => {
     priority,
     status: 'not started',
     supervisorId
-  }).returning()[0].id;
+  }).returning()[0];
 
+  console.log(ticketId)
 
   for (const assignee in assignees) {
     await db.insert(assignments).values({
