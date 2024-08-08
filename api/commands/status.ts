@@ -130,7 +130,7 @@ export const getResponse = async (message) => {
     content = `The following ticket has been completed:`;
   }
 
-  const condensedAssignees = await condenseAssignees(assignees.map((assignment) => assignment.userId));
+  const condensedAssignees = await condenseAssignees(assignees.map((assignment) => assignment.userId ?? ''));
 
   const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
