@@ -4,7 +4,7 @@ import {
 } from 'discord-interactions';
 import { GetDb, MessageComponentTypes, TextInputStyles } from '../util';
 import { and, eq } from 'drizzle-orm';
-import { tickets, users } from '../schema';
+import { assignments, tickets, users } from '../schema';
 
 export const data = {
   name: 'new',
@@ -185,16 +185,15 @@ export const getResponse = async (message) => {
     priority,
     status: 'not started',
     supervisorId
-  }).returning();
+  }).returning()[0].id;
 
-  console.log(ticketId)
 
-  // for (const assignee in assignees) {
-  //   await db.insert(assignments).values({
-  //     userId: assignee,
-  //     ticketId: ticketId
-  //   }).returning();
-  // }
+  for (const assignee in assignees) {
+    await db.insert(assignments).values({
+      userId: assignee,
+      ticketId: ticketId
+    }).returning();
+  }
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
