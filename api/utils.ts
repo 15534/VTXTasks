@@ -4,6 +4,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from './schema';
 
 export enum MessageComponentTypes {
+  NUMBER = 4,
   STRING = 3,
   MENTIONABLE_SELECT = 9,
 }

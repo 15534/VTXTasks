@@ -30,6 +30,7 @@ export const priorities = pgEnum('priority', [
 export const statuses = pgEnum('status', [
   'not started',
   'in progress',
+  'in review',
   'completed',
 ]);
 
