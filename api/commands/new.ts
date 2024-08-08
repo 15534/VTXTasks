@@ -127,7 +127,7 @@ export const getResponse = async (message) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'Media is too important to be assigned a task!'
+          content: 'Media is too busy cooking to be assigned tasks!'
         }
       }
     }
@@ -153,7 +153,7 @@ export const getResponse = async (message) => {
     }
 
     if (assignee === MECHANICAL_ID) {
-      assignees.push(
+      assignees = assignees.concat(
         (await db.query.users.findMany({
           where: eq(users.subgroup, 'mechanical'),
           columns: {
@@ -166,7 +166,7 @@ export const getResponse = async (message) => {
     }
 
     if (assignee === PROGRAMMING_ID) {
-      assignees.push(
+      assignees = assignees.concat(
         (await db.query.users.findMany({
           where: eq(users.subgroup, 'programming'),
           columns: {
@@ -179,7 +179,7 @@ export const getResponse = async (message) => {
     }
 
     if (assignee === OUTREACH_ID) {
-      assignees.push(
+      assignees = assignees.concat(
         (await db.query.users.findMany({
           where: eq(users.subgroup, 'outreach'),
           columns: {
