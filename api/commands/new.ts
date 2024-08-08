@@ -281,7 +281,7 @@ export const getResponse = async (message) => {
     accessId = ticketAccessIds[0].accessId + 1;
   }
 
-  const condensedAssignees = [...assignees];
+  let condensedAssignees = [...assignees];
 
   const mek = await db.query.users.findMany({
     where: eq(users.subgroup, 'mechanical'),
@@ -300,11 +300,11 @@ export const getResponse = async (message) => {
   }
 
   if (hasMek) {
-    assignees = assignees.filter((assignee) => {
+    condensedAssignees = condensedAssignees.filter((assignee) => {
       return !mek.map((user) => user.id).includes(assignee);
     });
 
-    assignees.push('&' + MECHANICAL_ID);
+    condensedAssignees.push('&' + MECHANICAL_ID);
   }
 
   const prog = await db.query.users.findMany({
@@ -324,11 +324,11 @@ export const getResponse = async (message) => {
   }
 
   if (hasProg) {
-    assignees = assignees.filter((assignee) => {
+    condensedAssignees = condensedAssignees.filter((assignee) => {
       return !prog.map((user) => user.id).includes(assignee);
     });
 
-    assignees.push('&' + PROGRAMMING_ID);
+    condensedAssignees.push('&' + PROGRAMMING_ID);
   }
 
   const outreach = await db.query.users.findMany({
@@ -348,11 +348,11 @@ export const getResponse = async (message) => {
   }
 
   if (hasOutreach) {
-    assignees = assignees.filter((assignee) => {
+    condensedAssignees = condensedAssignees.filter((assignee) => {
       return !outreach.map((user) => user.id).includes(assignee);
     });
 
-    assignees.push('&' + OUTREACH_ID);
+    condensedAssignees.push('&' + OUTREACH_ID);
   }
 
   const assigneeList = condensedAssignees.map((id, index) => `${index == condensedAssignees.length - 1 && condensedAssignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
