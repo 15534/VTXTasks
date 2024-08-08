@@ -136,7 +136,7 @@ export const getResponse = async (message) => {
       content,
       embeds: [
         {
-          title: `${status === 'completed' && '**ID ${accessId}**'}${ticket.title}`,
+          title: `${status === 'completed' ? '**ID ${accessId}**' : ''}${ticket.title}`,
           description: ticket.description,
           color: embedColor,
           timestamp: new Date().toISOString(),
