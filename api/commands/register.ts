@@ -2,7 +2,7 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TextInputStyles } from '../util';
+import { GetDb, MessageComponentTypes, TextInputStyles } from '../utils';
 import { users } from '../schema';
 
 export const data = {

@@ -13,6 +13,8 @@ export enum TextInputStyles {
   PARAGRAPH = 2,
 }
 
+export const TASK_CHANNEL = "1270942559367069777" as const;
+
 export const GetDb = () => {
   const client = neon(config.DATABASE_URL);
   return drizzle(client, { schema })

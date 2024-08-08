@@ -2,7 +2,7 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TextInputStyles } from '../util';
+import { GetDb, MessageComponentTypes, TASK_CHANNEL, TextInputStyles } from '../utils';
 import { and, eq } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
@@ -178,7 +178,47 @@ export const getResponse = async (message) => {
     };
   }
 
+  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
+
+  const response = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bot ${config.DISCORD_TOKEN}`
+    },
+    body: JSON.stringify({
+      content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
+      embeds: [
+        {
+          "title": title,
+          "description": description,
+          "color ": "#FF0000",
+          fields: [
+            {
+              name: 'Type',
+              value: type.split('')[0].toUpperCase() + type.slice(1),
+              inline: true,
+            },
+            {
+              name: 'Subgroup',
+              value: subgroup.split('')[0].toUpperCase() + subgroup.slice(1),
+              inline: true,
+            },
+            {
+              name: 'Priority',
+              value: priority.split('')[0].toUpperCase() + priority.slice(1),
+              inline: true,
+            },
+          ],
+        }
+      ]
+    })
+  }).then((res) => res.json()).then((res) => res as {
+    id: string
+  }).catch((e) => console.error(e));
+
   const [ticket] = await db.insert(tickets).values({
+    messageId: response["id"] ?? "",
     type,
     subgroup,
     title,
@@ -196,27 +236,6 @@ export const getResponse = async (message) => {
       userId: assignee
     });
   }
-
-  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
-
-  const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bot ${config.DISCORD_TOKEN}`
-    },
-    body: JSON.stringify({
-      content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
-      embeds: [
-        {
-          "title": "Hello!",
-          "description": "Hi!"
-        }
-      ]
-    })
-  })
-
-  console.log(await response.json())
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
