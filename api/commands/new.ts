@@ -261,7 +261,7 @@ export const getResponse = async (message) => {
     orderBy: desc(tickets.accessId)
   });
 
-  let accessId;
+  let accessId = 0;
 
   if (!tickets) {
     accessId = 1;
