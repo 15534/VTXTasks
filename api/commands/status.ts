@@ -49,12 +49,14 @@ export const getResponse = async (message) => {
 
   const ticket = await db.query.tickets.findFirst({
     where: and(
-      eq(tickets.accessId, parseInt(accessId)),
+      eq(tickets.accessId, accessId),
       ne(tickets.status, 'completed')
     ),
     with: {
       assignments: {
-        where: eq(assignments.userId, message.member.user.id),
+        columns: {
+          userId: true
+        }
       }
     }
   })
@@ -89,7 +91,16 @@ export const getResponse = async (message) => {
     }
   }
 
-  if (ticket.assignments.length === 0) {
+  let assigned = false;
+
+  for (let i = 0; i < ticket.assignments.length; i++) {
+    if (ticket.assignments[i].userId === message.member.user.id) {
+      assigned = true;
+      break;
+    }
+  }
+
+  if (!assigned) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
