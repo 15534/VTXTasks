@@ -266,7 +266,7 @@ export const getResponse = async (message) => {
   if (ticketAccessIds.length === 0) {
     accessId = 1;
   } else {
-    accessId = tickets[0].accessId + 1;
+    accessId = ticketAccessIds[0].accessId + 1;
   }
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
