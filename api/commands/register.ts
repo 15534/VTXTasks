@@ -69,7 +69,7 @@ export const getResponse = async (message) => {
     role = 'captain';
   }
 
-  const db = GetDb();
+  const db = await GetDb();
 
   await db.insert(users).values({
     id,

@@ -100,7 +100,7 @@ export const getResponse = async (message) => {
   let role = 'member';
   let subgroup: Subgroup | null = null;
 
-  const db = GetDb();
+  const db = await GetDb();
 
   assignees.shift();
 

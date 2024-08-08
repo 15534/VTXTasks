@@ -45,8 +45,6 @@ export const getResponse = async (message) => {
   const accessId = input[0].value;
   const status = input[1].value;
 
-  console.log(accessId, status, typeof accessId, typeof status)
-
   const db = await GetDb();
 
   const ticket = await db.query.tickets.findFirst({
@@ -54,13 +52,13 @@ export const getResponse = async (message) => {
       eq(tickets.accessId, accessId),
       ne(tickets.status, 'completed')
     ),
-    with: {
-      assignments: {
-        columns: {
-          userId: true
-        }
-      }
-    }
+    // with: {
+    //   assignments: {
+    //     columns: {
+    //       userId: true
+    //     }
+    //   }
+    // }
   })
 
   if (!ticket) {
@@ -93,24 +91,24 @@ export const getResponse = async (message) => {
     }
   }
 
-  let assigned = false;
-
-  for (let i = 0; i < ticket.assignments.length; i++) {
-    if (ticket.assignments[i].userId === message.member.user.id) {
-      assigned = true;
-      break;
-    }
-  }
-
-  if (!assigned) {
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        flags: InteractionResponseFlags.EPHEMERAL,
-        content: 'You do not have access to this ticket!'
-      }
-    }
-  }
+  // let assigned = false;
+  //
+  // for (let i = 0; i < ticket.assignments.length; i++) {
+  //   if (ticket.assignments[i].userId === message.member.user.id) {
+  //     assigned = true;
+  //     break;
+  //   }
+  // }
+  //
+  // if (!assigned) {
+  //   return {
+  //     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  //     data: {
+  //       flags: InteractionResponseFlags.EPHEMERAL,
+  //       content: 'You do not have access to this ticket!'
+  //     }
+  //   }
+  // }
 
   await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages/${ticket.messageId}`, {
     method: 'DELETE',
