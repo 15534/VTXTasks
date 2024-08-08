@@ -229,7 +229,7 @@ export const getResponse = async (message) => {
 
   for (let i = 0; i < accessIds.length; i++) {
     if (accessIds[i].accessId != i + 1) {
-      accessId = i;
+      accessId = i + 1;
 
       break;
     }
