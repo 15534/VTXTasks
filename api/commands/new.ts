@@ -204,7 +204,12 @@ export const getResponse = async (message) => {
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
-      content: "New ticket created!",
+      embeds: [
+        {
+          "title": "Hello!",
+          "description": "Hi! <@629785467037941769>"
+        }
+      ]
     })
   })
 
