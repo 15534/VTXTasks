@@ -190,8 +190,8 @@ export const getResponse = async (message) => {
       content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
-          title: title,
-          description: description,
+          title,
+          description,
           color: "#FF0000",
           timestamp: new Date().toISOString(),
           fields: [
@@ -214,7 +214,7 @@ export const getResponse = async (message) => {
         }
       ]
     })
-  }).then((res) => res.json()).then((res) => res as {
+  }).then(async (res) => await res.json()).then((res) => res as {
     id: string
   }).catch((e) => console.error(e));
 
