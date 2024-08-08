@@ -2,7 +2,15 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TASK_CHANNEL, TextInputStyles } from '../utils';
+import {
+  GetDb, MECHANICAL_AFFILIATE_ID,
+  MECHANICAL_ID, MEDIA_ID,
+  MessageComponentTypes,
+  OUTREACH_ID, PROGRAMMING_AFFILIATE_ID,
+  PROGRAMMING_ID,
+  TASK_CHANNEL,
+  TextInputStyles
+} from '../utils';
 import { and, asc, eq, ne } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
@@ -108,6 +116,75 @@ export const getResponse = async (message) => {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = assignees[i];
 
+    if (assignee === MEDIA_ID){
+      return {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          flags: InteractionResponseFlags.EPHEMERAL,
+          content: 'The media role cannot be assigned a task.'
+        }
+      }
+    }
+
+    if (assignee === PROGRAMMING_AFFILIATE_ID){
+      return {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          flags: InteractionResponseFlags.EPHEMERAL,
+          content: 'The programming affiliate role cannot be assigned tasks.'
+        }
+      }
+    }
+
+    if (assignee === MECHANICAL_AFFILIATE_ID){
+      return {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          flags: InteractionResponseFlags.EPHEMERAL,
+          content: 'The mechanical affiliate role cannot be assigned tasks.'
+        }
+      }
+    }
+
+    if (assignee === MECHANICAL_ID) {
+      assignees.push(
+        (await db.query.users.findMany({
+          where: eq(users.subgroup, 'mechanical'),
+          columns: {
+            id: true
+          }
+        })).map((user) => user.id)
+      )
+
+      continue;
+    }
+
+    if (assignee === PROGRAMMING_ID) {
+      assignees.push(
+        (await db.query.users.findMany({
+          where: eq(users.subgroup, 'programming'),
+          columns: {
+            id: true
+          }
+        })).map((user) => user.id)
+      )
+
+      continue;
+    }
+
+    if (assignee === OUTREACH_ID) {
+      assignees.push(
+        (await db.query.users.findMany({
+          where: eq(users.subgroup, 'outreach'),
+          columns: {
+            id: true
+          }
+        })).map((user) => user.id)
+      )
+
+      continue;
+    }
+
     const user = await db.query.users.findFirst({
       where: eq(users.id, assignee),
       columns: {
@@ -142,6 +219,10 @@ export const getResponse = async (message) => {
       subgroup = 'general';
     }
   }
+
+  assignees.filter((assignee) => {
+    return assignee !== MECHANICAL_ID && assignee !== PROGRAMMING_ID && assignee !== OUTREACH_ID;
+  })
 
   subgroup = subgroup as Subgroup | 'general';
 
