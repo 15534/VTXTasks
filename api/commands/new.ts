@@ -194,7 +194,7 @@ export const getResponse = async (message) => {
     await db.insert(assignments).values({
       ticketId: ticket.id,
       userId: assignee
-    }).returning();
+    });
   }
 
   const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
@@ -204,11 +204,13 @@ export const getResponse = async (message) => {
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
-      content: "<@629785467037941769>",
+      content: `The following ticket has been assigned to ${assignees.map((id, index) => {
+        `<@${id}>${index < assignees.length - 1 && ', '}`;
+      })} and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
           "title": "Hello!",
-          "description": "Hi! <@629785467037941769>"
+          "description": "Hi!"
         }
       ]
     })
