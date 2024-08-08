@@ -120,12 +120,14 @@ export const getResponse = async (message) => {
       assignee = assignee.substring(1);
     }
 
+    console.log(assignee);
+
     if (assignee === MEDIA_ID) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'Media cannot be assigned a task.'
+          content: 'Media is too important to be assigned a task!'
         }
       }
     }
@@ -135,7 +137,7 @@ export const getResponse = async (message) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'The programming affiliate role cannot be assigned tasks.'
+          content: 'The programming affiliates are too busy cooking to be assigned tasks!'
         }
       }
     }
@@ -145,7 +147,7 @@ export const getResponse = async (message) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'The mechanical affiliate r cannot be assigned tasks.'
+          content: 'The mechanical affiliates are too busy cooking to be assigned tasks!'
         }
       }
     }
