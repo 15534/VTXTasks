@@ -91,7 +91,7 @@ export const getResponse = async (message) => {
     )
   })
 
-  if (!assigned) {
+  if (!assigned && ticket.supervisorId !== message.member.user.id) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
@@ -129,7 +129,7 @@ export const getResponse = async (message) => {
   let content = `The following ticket status has been updated to **${status}**:`;
 
   if (status === 'in review') {
-    content = `<@${ticket.supervisorId}> please review the following ticket:`;
+    content = `T<@${ticket.supervisorId}> please review the following ticket:`;
   }
 
   if (status === 'completed') {
