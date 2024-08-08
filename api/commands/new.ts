@@ -204,6 +204,7 @@ export const getResponse = async (message) => {
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
+      content: "<@629785467037941769>",
       embeds: [
         {
           "title": "Hello!",
