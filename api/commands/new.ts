@@ -227,6 +227,10 @@ export const getResponse = async (message) => {
   }
 
   assignees = assignees.filter((assignee) => {
+    if (assignee[0] === "&") {
+      assignee = assignee.substring(1);
+    }
+    
     return assignee !== MECHANICAL_ID && assignee !== PROGRAMMING_ID && assignee !== OUTREACH_ID;
   })
 
