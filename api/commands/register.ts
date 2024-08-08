@@ -2,7 +2,15 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TextInputStyles } from '../utils';
+import {
+  CAPTAIN_ID,
+  GetDb,
+  LEAD_ID,
+  MECHANICAL_ID,
+  MessageComponentTypes, OUTREACH_ID,
+  PROGRAMMING_ID,
+  TextInputStyles
+} from '../utils';
 import { users } from '../schema';
 
 export const data = {
@@ -35,15 +43,15 @@ export const getResponse = async (message) => {
 
   let subgroup: Subgroup | null = null;
 
-  if (message.member.roles.includes('697834833971249202')) {
+  if (message.member.roles.includes(MECHANICAL_ID)) {
     subgroup = 'mechanical'
   }
 
-  if (message.member.roles.includes('697834869442609202')) {
+  if (message.member.roles.includes(PROGRAMMING_ID)) {
     subgroup = 'programming'
   }
 
-  if (message.member.roles.includes('697834893492748418')) {
+  if (message.member.roles.includes(OUTREACH_ID)) {
     subgroup = 'outreach'
   }
 
@@ -61,11 +69,11 @@ export const getResponse = async (message) => {
 
   let role: Role = 'member';
 
-  if (message.member.roles.includes('737502259281264664')) {
+  if (message.member.roles.includes(LEAD_ID)) {
     role = 'lead';
   }
 
-  if (message.member.roles.includes('848036255283281930')) {
+  if (message.member.roles.includes(CAPTAIN_ID)) {
     role = 'captain';
   }
 

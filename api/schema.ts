@@ -10,10 +10,18 @@ export const subgroups = pgEnum('subgroup', [
   'outreach',
 ]);
 
+export const ticketGroups = pgEnum('ticket_group', [
+  'mechanical',
+  'programming',
+  'outreach',
+  'general',
+])
+
 export const types = pgEnum('ticket_type', [
   'feature',
   'fix',
   'part',
+  'product',
   'documentation',
   'media',
   'other',
@@ -52,7 +60,7 @@ export const tickets = pgTable('ticket', {
   accessId: integer('access_id').notNull(),
   messageId: varchar('message_id').notNull(),
   type: types('type').notNull(),
-  subgroup: subgroups('subgroup').notNull(),
+  subgroup: ticketGroups('subgroup').notNull(),
   title: varchar('title', { length: 128 }).notNull(),
   description: varchar('description', { length: 2048 }).notNull(),
   priority: priorities('priority').notNull(),

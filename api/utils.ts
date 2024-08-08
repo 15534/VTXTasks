@@ -16,6 +16,14 @@ export enum TextInputStyles {
 
 export const TASK_CHANNEL = "1270942559367069777" as const;
 
+export const CAPTAIN_ID = "848036255283281930" as const;
+export const LEAD_ID = '737502259281264664' as const;
+
+export const MECHANICAL_ID = '697834833971249202' as const;
+export const PROGRAMMING_ID = '697834869442609202' as const;
+export const OUTREACH_ID = '697834893492748418' as const;
+
+
 export const GetDb = () => {
   const client = neon(config.DATABASE_URL);
   return drizzle(client, { schema })

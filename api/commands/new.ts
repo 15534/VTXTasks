@@ -21,6 +21,7 @@ export const data = {
         'feature',
         'fix',
         'part',
+        'product',
         'documentation',
         'media',
         'other'
@@ -98,7 +99,7 @@ export const getResponse = async (message) => {
   type Subgroup = 'mechanical' | 'programming' | 'outreach'
 
   let role = 'member';
-  let subgroup: Subgroup | null = null;
+  let subgroup: Subgroup | 'general' | null = null;
 
   const db = await GetDb();
 
@@ -125,11 +126,11 @@ export const getResponse = async (message) => {
       };
     }
 
-    if (user.role == 'captain') {
+    if (user.role === 'captain') {
       role = 'captain';
     }
 
-    if (user.role == 'lead' && role != 'captain') {
+    if (user.role === 'lead' && role !== 'captain') {
       role = 'lead';
     }
 
@@ -137,24 +138,18 @@ export const getResponse = async (message) => {
       subgroup = user.subgroup as Subgroup;
     }
 
-    if (subgroup != user.subgroup) {
-      return {
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          flags: InteractionResponseFlags.EPHEMERAL,
-          content: 'Assignees must be in the same subgroup!'
-        }
-      };
+    if (subgroup !== user.subgroup) {
+      subgroup = 'general';
     }
   }
 
-  subgroup = subgroup as Subgroup;
+  subgroup = subgroup as Subgroup | 'general';
 
   let supervisorId;
 
-  if (role == 'member') {
+  if (role == 'member' && subgroup !== 'general') {
     supervisorId = (await db.query.users.findFirst({
-      where: and(eq(users.role, 'lead'), eq(users.subgroup, subgroup)),
+      where: and(eq(users.role, 'lead'), eq(users.subgroup, subgroup as Subgroup)),
       columns: {
         id: true
       }
