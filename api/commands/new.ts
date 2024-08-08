@@ -180,6 +180,29 @@ export const getResponse = async (message) => {
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
+  const accessIds = await db.query.tickets.findMany({
+    where: ne(tickets.status, 'completed'),
+    columns: {
+      accessId: true,
+      status: true
+    },
+    orderBy: asc(tickets.accessId)
+  });
+
+  let accessId = 0;
+
+  for (let i = 0; i < accessIds.length; i++) {
+    if (accessIds[i].accessId != i + 1) {
+      accessId = i + 1;
+
+      break;
+    }
+  }
+
+  if (accessId === 0) {
+    accessId = accessIds.length + 1;
+  }
+
   const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
     headers: {
@@ -190,7 +213,7 @@ export const getResponse = async (message) => {
       content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
-          title,
+          title: `*#${accessId}*: ${title}`,
           description,
           color: 0xFF0000,
           timestamp: new Date().toISOString(),
@@ -215,29 +238,6 @@ export const getResponse = async (message) => {
       ]
     })
   }).then((res) => res.json()).then((res: { id: string }) => res.id);
-
-  const accessIds = await db.query.tickets.findMany({
-    where: ne(tickets.status, 'completed'),
-    columns: {
-      accessId: true,
-      status: true
-    },
-    orderBy: asc(tickets.accessId)
-  });
-
-  let accessId = 0;
-
-  for (let i = 0; i < accessIds.length; i++) {
-    if (accessIds[i].accessId != i + 1) {
-      accessId = i + 1;
-
-      break;
-    }
-  }
-
-  if (accessId === 0) {
-    accessId = accessIds.length + 1;
-  }
 
   const [ticket] = await db.insert(tickets).values({
     accessId,
