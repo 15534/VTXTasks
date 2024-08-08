@@ -177,7 +177,7 @@ export const getResponse = async (message) => {
     };
   }
 
-  const ticketId = await db.insert(tickets).values({
+  const [ticket] = await db.insert(tickets).values({
     type,
     subgroup,
     title,
@@ -187,12 +187,12 @@ export const getResponse = async (message) => {
     supervisorId
   }).returning();
 
-  console.log(ticketId['id'])
+  console.log(ticket)
 
   for (const assignee in assignees) {
     await db.insert(assignments).values({
       userId: assignee,
-      ticketId: "7658943"
+      ticketId: ticket.id
     }).returning();
   }
 
