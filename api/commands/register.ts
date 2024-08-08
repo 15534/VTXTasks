@@ -38,7 +38,7 @@ export const getResponse = async (message) => {
   const email = input[0].value;
   const username = message.member.user.username;
 
-  if (!email.match(/.*@exeter.edu$/)) {
+  if (!email.match(/.*@exeter\.edu$/)) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
