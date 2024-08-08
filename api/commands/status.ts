@@ -3,7 +3,7 @@ import {
   InteractionResponseType
 } from 'discord-interactions';
 import { GetDb, MessageComponentTypes, TASK_CHANNEL } from '../utils';
-import { and, asc, eq, ne } from 'drizzle-orm';
+import { and, asc, eq, ne, sql } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
 
@@ -162,16 +162,24 @@ export const getResponse = async (message) => {
     })
   }).then((res) => res.json()).then((res: { id: string }) => res.id).catch((e) => console.error(e));
 
-  await db.update(tickets).set({
-    status,
-    messageId: messageId as string
-  }).where(eq(tickets.accessId, accessId));
+  if (status === 'completed') {
+    await db.update(tickets).set({
+      status,
+      messageId: messageId as string,
+      completedAt: sql`now()`
+    }).where(eq(tickets.accessId, accessId));
+  } else {
+    await db.update(tickets).set({
+      status,
+      messageId: messageId as string
+    }).where(eq(tickets.accessId, accessId));
+  }
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       flags: InteractionResponseFlags.EPHEMERAL,
-      content: 'Ticket created!'
+      content: 'Ticket status updated!'
     }
   };
 };
