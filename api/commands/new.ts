@@ -261,11 +261,12 @@ export const getResponse = async (message) => {
     orderBy: desc(tickets.accessId)
   });
 
-  let accessId = 0;
+  let accessId: number;
 
   if (!tickets) {
     accessId = 1;
   } else {
+    console.log(tickets)
     accessId = tickets[0].accessId + 1;
   }
 
