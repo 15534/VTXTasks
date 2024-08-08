@@ -197,7 +197,7 @@ export const getResponse = async (message) => {
     }).returning();
   }
 
-  await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
+  const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
     method: 'POST',
     headers: {
       'Context-Type': 'application/json',
@@ -218,6 +218,8 @@ export const getResponse = async (message) => {
       ]
     })
   })
+
+  console.log(response)
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
