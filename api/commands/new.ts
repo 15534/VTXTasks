@@ -194,23 +194,23 @@ export const getResponse = async (message) => {
           description,
           color: "#FF0000",
           timestamp: new Date().toISOString(),
-          fields: [
-            {
-              name: 'Type',
-              value: type.split('')[0].toUpperCase() + type.slice(1),
-              inline: true,
-            },
-            {
-              name: 'Subgroup',
-              value: subgroup.split('')[0].toUpperCase() + subgroup.slice(1),
-              inline: true,
-            },
-            {
-              name: 'Priority',
-              value: priority.split('')[0].toUpperCase() + priority.slice(1),
-              inline: true,
-            },
-          ],
+          // fields: [
+          //   {
+          //     name: 'Type',
+          //     value: type.split('')[0].toUpperCase() + type.slice(1),
+          //     inline: true,
+          //   },
+          //   {
+          //     name: 'Subgroup',
+          //     value: subgroup.split('')[0].toUpperCase() + subgroup.slice(1),
+          //     inline: true,
+          //   },
+          //   {
+          //     name: 'Priority',
+          //     value: priority.split('')[0].toUpperCase() + priority.slice(1),
+          //     inline: true,
+          //   },
+          // ],
         }
       ]
     })
