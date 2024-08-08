@@ -190,9 +190,10 @@ export const getResponse = async (message) => {
       content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
-          "title": title,
-          "description": description,
-          "color ": "#FF0000",
+          title: title,
+          description: description,
+          color: "#FF0000",
+          timestamp: new Date().toISOString(),
           fields: [
             {
               name: 'Type',
