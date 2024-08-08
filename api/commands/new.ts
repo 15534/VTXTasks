@@ -114,9 +114,11 @@ export const getResponse = async (message) => {
   assignees.shift();
 
   for (let i = 0; i < assignees.length; i++) {
-    const assignee = assignees[i];
+    let assignee = assignees[i];
 
-    console.log(assignee)
+    if (assignee[0] === "&") {
+      assignee = assignee.substring(1);
+    }
 
     if (assignee === MEDIA_ID) {
       return {
