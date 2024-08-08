@@ -259,7 +259,7 @@ export const getResponse = async (message) => {
       accessId: true
     },
     orderBy: desc(tickets.accessId)
-  }))[0] + 1;
+  }))[0].accessId + 1;
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
