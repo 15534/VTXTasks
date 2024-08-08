@@ -57,7 +57,7 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const tickets = pgTable('ticket', {
   id: uuid('id').default(sql`gen_random_uuid()`).primaryKey(),
-  accessId: serial('access_id'),
+  accessId: integer('access_id').notNull(),
   messageId: varchar('message_id').notNull(),
   type: types('type').notNull(),
   subgroup: ticketGroups('subgroup').notNull(),

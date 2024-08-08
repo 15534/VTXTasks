@@ -300,6 +300,7 @@ export const getResponse = async (message) => {
   }).then((res) => res.json()).then((res: { id: string }) => res.id).catch((e) => console.error(e));
 
   const [ticket] = await db.insert(tickets).values({
+    accessId,
     messageId: messageId as string,
     type,
     subgroup,
