@@ -53,7 +53,7 @@ export const tickets = pgTable('ticket', {
   description: varchar('description', { length: 2048 }).notNull(),
   priority: priorities('priority').notNull(),
   status: statuses('status').notNull(),
-  supervisorId: uuid('supervisor_id').notNull(),
+  supervisorId: varchar('supervisor_id').notNull(),
 });
 
 export const ticketRelations = relations(tickets, ({ one, many }) => ({

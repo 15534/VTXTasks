@@ -113,7 +113,7 @@ export const getResponse = async (message) => {
         subgroup: true,
       }
     });
-    
+
     if (!user) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -177,7 +177,7 @@ export const getResponse = async (message) => {
     };
   }
 
-  const ticketId = (await db.insert(tickets).values({
+  const ticketId = await db.insert(tickets).values({
     type,
     subgroup,
     title,
@@ -185,9 +185,7 @@ export const getResponse = async (message) => {
     priority,
     status: 'not started',
     supervisorId
-  }).returning());
-
-  console.log(ticketId);
+  }).returning();
 
   // for (const assignee in assignees) {
   //   await db.insert(assignments).values({
