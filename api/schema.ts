@@ -1,5 +1,6 @@
 import { relations, sql } from 'drizzle-orm';
-import { pgEnum, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { randomUUID } from 'node:crypto';
 
 export const roles = pgEnum('role', ['captain', 'lead', 'member']);
 
@@ -46,13 +47,17 @@ export const userRelations = relations(users, ({ many }) => ({
 }));
 
 export const tickets = pgTable('ticket', {
-  id: uuid('id').default(sql`gen_random_uuid()`),
+  id: uuid('id').default(sql`gen_random_uuid()`).primaryKey(),
   type: types('type').notNull(),
   subgroup: subgroups('subgroup').notNull(),
   title: varchar('title', { length: 128 }).notNull(),
   description: varchar('description', { length: 2048 }).notNull(),
   priority: priorities('priority').notNull(),
   status: statuses('status').notNull(),
+  completedAt: timestamp('completed_at', {
+    withTimezone: false,
+    mode: 'date',
+  }),
   supervisorId: varchar('supervisor_id').notNull(),
 });
 
@@ -65,17 +70,18 @@ export const ticketRelations = relations(tickets, ({ one, many }) => ({
 }));
 
 export const assignments = pgTable('assignment', {
-  userId: varchar('user_id'),
+  id: uuid('id').default(sql`gen_random_uuid()`).primaryKey(),
   ticketId: uuid('ticket_id'),
+  userId: varchar('user_id'),
 });
 
 export const assignmentRelations = relations(assignments, ({ one }) => ({
-  user: one(users, {
-    fields: [assignments.userId],
-    references: [users.id],
-  }),
   ticket: one(tickets, {
     fields: [assignments.userId],
     references: [tickets.id],
+  }),
+  user: one(users, {
+    fields: [assignments.userId],
+    references: [users.id],
   }),
 }));
