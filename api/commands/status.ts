@@ -49,7 +49,7 @@ export const getResponse = async (message) => {
 
   const ticket = await db.query.tickets.findFirst({
     where: and(
-      eq(tickets.accessId, accessId),
+      eq(tickets.accessId, parseInt(accessId)),
       ne(tickets.status, 'completed')
     ),
     with: {
