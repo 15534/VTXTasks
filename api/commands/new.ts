@@ -200,22 +200,11 @@ export const getResponse = async (message) => {
   const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
     method: 'POST',
     headers: {
-      'Context-Type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
-      embeds: [
-        {
-          title: "New Ticket Created",
-          description: "A new ticket has been successfully created.",
-          color: 5814783,
-          fields: [
-            { name: "Title", value: "Ticket Title Here", inline: true },
-            { name: "Priority", value: "High", inline: true }
-          ],
-          timestamp: new Date().toISOString()
-        }
-      ]
+      content: "New ticket created!",
     })
   })
 
