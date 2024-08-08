@@ -45,6 +45,8 @@ export const getResponse = async (message) => {
   const accessId = input[0].value;
   const status = input[1].value;
 
+  console.log(accessId, status, typeof accessId, typeof status)
+
   const db = GetDb();
 
   const ticket = await db.query.tickets.findFirst({
