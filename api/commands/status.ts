@@ -48,10 +48,14 @@ export const getResponse = async (message) => {
   const db = await GetDb();
 
   const ticket = await db.query.tickets.findFirst({
-    where: and(
-      eq(tickets.accessId, accessId),
-      ne(tickets.status, 'completed')
-    )
+    where: eq(tickets.accessId, accessId),
+    with: {
+      assignments: {
+        columns: {
+          userId: true,
+        }
+      }
+    }
   })
 
   if (!ticket) {
@@ -136,7 +140,7 @@ export const getResponse = async (message) => {
       content,
       embeds: [
         {
-          title: `${status !== 'completed' ? `**ID ${accessId}** ` : ''}${ticket.title}`,
+          title: `**ID ${accessId}** ${ticket.title}`,
           description: ticket.description,
           color: embedColor,
           timestamp: new Date().toISOString(),
@@ -154,6 +158,11 @@ export const getResponse = async (message) => {
             {
               name: 'Priority',
               value: ticket.priority.split('')[0].toUpperCase() + ticket.priority.slice(1),
+              inline: true,
+            },
+            {
+              name: 'Assignees',
+              value: ticket.assignments.map((assignment, index) => `<@${assignment.userId}>`).join(' '),
               inline: true,
             },
           ],
