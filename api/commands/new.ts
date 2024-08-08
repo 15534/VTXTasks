@@ -99,7 +99,7 @@ export const getResponse = async (message) => {
   const input = message.data.options;
 
   const type = input[0].value;
-  const assignees = input[1].value.split('@').map((id) => id.substring(0, id.indexOf('>')));
+  let assignees = input[1].value.split('@').map((id) => id.substring(0, id.indexOf('>')));
   const title = input[2].value;
   const description = input[3].value;
   const priority = input[4].value;
@@ -220,7 +220,7 @@ export const getResponse = async (message) => {
     }
   }
 
-  assignees.filter((assignee) => {
+  assignees = assignees.filter((assignee) => {
     return assignee !== MECHANICAL_ID && assignee !== PROGRAMMING_ID && assignee !== OUTREACH_ID;
   })
 
