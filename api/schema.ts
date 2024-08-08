@@ -65,7 +65,7 @@ export const ticketRelations = relations(tickets, ({ one, many }) => ({
 }));
 
 export const assignments = pgTable('assignment', {
-  userId: uuid('user_id'),
+  userId: varchar('user_id'),
   ticketId: uuid('ticket_id'),
 });
 

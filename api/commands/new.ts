@@ -187,9 +187,9 @@ export const getResponse = async (message) => {
     supervisorId
   }).returning();
 
-  console.log(ticket)
+  for (let i = 0; i < assignees.length; i++) {
+    const assignee = assignees[i];
 
-  for (const assignee in assignees) {
     await db.insert(assignments).values({
       userId: assignee,
       ticketId: ticket.id
