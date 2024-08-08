@@ -226,13 +226,15 @@ export const getResponse = async (message) => {
     }
   }
 
+  assignees = [...new Set(assignees)];
+
   assignees = assignees.filter((assignee) => {
     if (assignee[0] === "&") {
       assignee = assignee.substring(1);
     }
-    
+
     return assignee !== MECHANICAL_ID && assignee !== PROGRAMMING_ID && assignee !== OUTREACH_ID;
-  })
+  });
 
   subgroup = subgroup as Subgroup | 'general';
 
@@ -279,7 +281,81 @@ export const getResponse = async (message) => {
     accessId = ticketAccessIds[0].accessId + 1;
   }
 
-  const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 && assignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
+  const condensedAssignees = [...assignees];
+
+  const mek = await db.query.users.findMany({
+    where: eq(users.subgroup, 'mechanical'),
+    columns: {
+      id: true
+    }
+  });
+
+  let hasMek = true;
+
+  for (let i = 0; i < mek.length; i++) {
+    if (!condensedAssignees.includes(mek[i].id)) {
+      hasMek = false;
+      break;
+    }
+  }
+
+  if (hasMek) {
+    assignees = assignees.filter((assignee) => {
+      return !mek.map((user) => user.id).includes(assignee);
+    });
+
+    assignees.push('&' + MECHANICAL_ID);
+  }
+
+  const prog = await db.query.users.findMany({
+    where: eq(users.subgroup, 'programming'),
+    columns: {
+      id: true
+    }
+  });
+
+  let hasProg = true;
+
+  for (let i = 0; i < prog.length; i++) {
+    if (!condensedAssignees.includes(prog[i].id)) {
+      hasProg = false;
+      break;
+    }
+  }
+
+  if (hasProg) {
+    assignees = assignees.filter((assignee) => {
+      return !prog.map((user) => user.id).includes(assignee);
+    });
+
+    assignees.push('&' + PROGRAMMING_ID);
+  }
+
+  const outreach = await db.query.users.findMany({
+    where: eq(users.subgroup, 'outreach'),
+    columns: {
+      id: true
+    }
+  });
+
+  let hasOutreach = true;
+
+  for (let i = 0; i < outreach.length; i++) {
+    if (!condensedAssignees.includes(outreach[i].id)) {
+      hasOutreach = false;
+      break;
+    }
+  }
+
+  if (hasOutreach) {
+    assignees = assignees.filter((assignee) => {
+      return !outreach.map((user) => user.id).includes(assignee);
+    });
+
+    assignees.push('&' + OUTREACH_ID);
+  }
+
+  const assigneeList = condensedAssignees.map((id, index) => `${index == condensedAssignees.length - 1 && condensedAssignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
   const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
