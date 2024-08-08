@@ -167,12 +167,12 @@ export const getResponse = async (message) => {
       status,
       messageId: messageId as string,
       completedAt: sql`now()`
-    }).where(eq(tickets.accessId, accessId));
+    }).where(eq(tickets.id, ticket.id));
   } else {
     await db.update(tickets).set({
       status,
       messageId: messageId as string
-    }).where(eq(tickets.accessId, accessId));
+    }).where(eq(tickets.id, ticket.id));
   }
 
   return {
