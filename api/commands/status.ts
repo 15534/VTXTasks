@@ -52,7 +52,7 @@ export const getResponse = async (message) => {
   })
 
   const assignees = await db.query.assignments.findMany({
-    where: eq(assignments.ticketId, ticket?.id),
+    where: eq(assignments.ticketId, ticket?.id ?? ""),
     columns: {
       userId: true
     }
