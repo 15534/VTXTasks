@@ -197,6 +197,8 @@ export const getResponse = async (message) => {
     });
   }
 
+  const assigneeList = assignees.map((id) => `<@${id}>`).join(', ');
+
   const response = await fetch('https://discord.com/api/v9/channels/1270942559367069777/messages', {
     method: 'POST',
     headers: {
@@ -204,9 +206,7 @@ export const getResponse = async (message) => {
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
-      content: `The following ticket has been assigned to ${assignees.map((id, index) => {
-        `<@${id}>${index < assignees.length - 1 && ', '}`;
-      })} and is being supervised by <@${supervisorId}>:`,
+      content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
           "title": "Hello!",
