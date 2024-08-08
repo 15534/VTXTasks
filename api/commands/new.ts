@@ -116,6 +116,8 @@ export const getResponse = async (message) => {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = assignees[i];
 
+    console.log(assignee)
+
     if (assignee === MEDIA_ID) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
