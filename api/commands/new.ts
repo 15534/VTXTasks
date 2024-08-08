@@ -214,12 +214,10 @@ export const getResponse = async (message) => {
         }
       ]
     })
-  }).then(async (res) => await res.json()).then((res) => res as {
-    id: string
-  }).catch((e) => console.error(e));
+  })
 
   const [ticket] = await db.insert(tickets).values({
-    messageId: response["id"] ?? "",
+    messageId: "fdsafsda",
     type,
     subgroup,
     title,
