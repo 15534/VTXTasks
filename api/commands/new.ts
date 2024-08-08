@@ -180,7 +180,7 @@ export const getResponse = async (message) => {
 
   const assigneeList = assignees.map((id, index) => `${index == assignees.length - 1 ? 'and ' : ''}<@${id}>`).join(', ');
 
-  const response = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
+  const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -214,10 +214,10 @@ export const getResponse = async (message) => {
         }
       ]
     })
-  })
+  }).then((res) => res.json()).then((res: { id: string }) => res.id);
 
   const [ticket] = await db.insert(tickets).values({
-    messageId: "fdsafsda",
+    messageId,
     type,
     subgroup,
     title,
