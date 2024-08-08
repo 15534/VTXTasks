@@ -201,7 +201,7 @@ export const getResponse = async (message) => {
     method: 'POST',
     headers: {
       'Context-Type': 'application/json',
-      'Authorization': `Bearer ${config.DISCORD_TOKEN}`
+      'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
       embeds: [
