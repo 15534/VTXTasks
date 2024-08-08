@@ -102,8 +102,10 @@ export const getResponse = async (message) => {
   const db = GetDb();
 
   assignees.shift();
-  
-  for (const assignee in assignees) {
+
+  for (let i = 0; i < assignees.length; i++) {
+    const assignee = assignees[i];
+
     const user = await db.query.users.findFirst({
       where: eq(users.id, assignee),
       columns: {
@@ -111,9 +113,7 @@ export const getResponse = async (message) => {
         subgroup: true,
       }
     });
-
-    console.log(assignee, user)
-
+    
     if (!user) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
