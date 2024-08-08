@@ -49,12 +49,12 @@ export const getResponse = async (message) => {
 
   const ticket = await db.query.tickets.findFirst({
     where: eq(tickets.accessId, accessId),
-    with: {
-      assignments: {
-        columns: {
-          userId: true,
-        }
-      }
+  })
+
+  const assignees = await db.query.assignments.findMany({
+    where: eq(assignments.ticketId, ticket?.id),
+    columns: {
+      userId: true
     }
   })
 
@@ -162,7 +162,7 @@ export const getResponse = async (message) => {
             },
             {
               name: 'Assignees',
-              value: ticket.assignments.map((assignment, index) => `<@${assignment.userId}>`).join(' '),
+              value: assignees.map((assignment, index) => `<@${assignment.userId}>`).join(' '),
               inline: true,
             },
           ],
