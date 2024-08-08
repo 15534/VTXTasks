@@ -221,7 +221,7 @@ export const getResponse = async (message) => {
       status: ne('completed')
     },
     columns: {
-      accessId: true
+      accessId: true,
       status: true
     },
     orderBy: {
