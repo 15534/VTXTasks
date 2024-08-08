@@ -192,7 +192,7 @@ export const getResponse = async (message) => {
         {
           title,
           description,
-          color: "#FF0000",
+          color: 0xFF0000,
           // timestamp: new Date().toISOString(),
           // fields: [
           //   {
