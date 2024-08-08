@@ -4,7 +4,7 @@ import {
 } from 'discord-interactions';
 import {
   CAPTAIN_ID,
-  GetDb,
+  getDb,
   LEAD_ID,
   MECHANICAL_ID,
   MessageComponentTypes, OUTREACH_ID,
@@ -87,7 +87,7 @@ export const getResponse = async (message) => {
     role = 'captain';
   }
 
-  const db = await GetDb();
+  const db = getDb();
 
   await db.insert(users).values({
     id,

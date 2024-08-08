@@ -2,7 +2,7 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TASK_CHANNEL } from '../utils';
+import { condenseAssignees, getDb, MessageComponentTypes, TASK_CHANNEL } from '../utils';
 import { and, asc, eq, ne, sql } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
@@ -45,7 +45,7 @@ export const getResponse = async (message) => {
   const accessId = input[0].value;
   const status = input[1].value;
 
-  const db = await GetDb();
+  const db = getDb();
 
   const ticket = await db.query.tickets.findFirst({
     where: eq(tickets.accessId, accessId),
@@ -130,6 +130,8 @@ export const getResponse = async (message) => {
     content = `The following ticket has been completed:`;
   }
 
+  const condensedAssignees = await condenseAssignees(assignees.map((assignment) => assignment.userId));
+
   const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
     headers: {
@@ -162,8 +164,7 @@ export const getResponse = async (message) => {
             },
             {
               name: 'Assignees',
-              value: assignees.map((assignment, index) => `<@${assignment.userId}>`).join(' '),
-              inline: true,
+              value: condensedAssignees.map((assignment, index) => `<@${assignment}>`).join(' '),
             },
           ],
         }

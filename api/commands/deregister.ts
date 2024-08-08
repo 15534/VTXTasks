@@ -2,7 +2,7 @@ import {
   InteractionResponseFlags,
   InteractionResponseType
 } from 'discord-interactions';
-import { GetDb, MessageComponentTypes, TextInputStyles } from '../utils';
+import { getDb, MessageComponentTypes, TextInputStyles } from '../utils';
 import { users } from '../schema';
 import { eq } from 'drizzle-orm';
 
@@ -14,7 +14,7 @@ export const data = {
 export const getResponse = async (message) => {
   const id = message.member.user.id;
 
-  const db = await GetDb();
+  const db = getDb();
 
   await db.delete(users).where(eq(users.id, id));
 

@@ -3,7 +3,8 @@ import {
   InteractionResponseType
 } from 'discord-interactions';
 import {
-  GetDb, MECHANICAL_AFFILIATE_ID,
+  condenseAssignees,
+  getDb, MECHANICAL_AFFILIATE_ID,
   MECHANICAL_ID, MEDIA_ID,
   MessageComponentTypes,
   OUTREACH_ID, PROGRAMMING_AFFILIATE_ID,
@@ -109,7 +110,7 @@ export const getResponse = async (message) => {
   let role = 'member';
   let subgroup: Subgroup | 'general' | null = null;
 
-  const db = await GetDb();
+  const db = getDb();
 
   assignees.shift();
 
@@ -281,81 +282,8 @@ export const getResponse = async (message) => {
     accessId = ticketAccessIds[0].accessId + 1;
   }
 
-  let condensedAssignees = [...assignees];
-
-  const mek = await db.query.users.findMany({
-    where: eq(users.subgroup, 'mechanical'),
-    columns: {
-      id: true
-    }
-  });
-
-  let hasMek = true;
-
-  for (let i = 0; i < mek.length; i++) {
-    if (!condensedAssignees.includes(mek[i].id)) {
-      hasMek = false;
-      break;
-    }
-  }
-
-  if (hasMek) {
-    condensedAssignees = condensedAssignees.filter((assignee) => {
-      return !mek.map((user) => user.id).includes(assignee);
-    });
-
-    condensedAssignees.push('&' + MECHANICAL_ID);
-  }
-
-  const prog = await db.query.users.findMany({
-    where: eq(users.subgroup, 'programming'),
-    columns: {
-      id: true
-    }
-  });
-
-  let hasProg = true;
-
-  for (let i = 0; i < prog.length; i++) {
-    if (!condensedAssignees.includes(prog[i].id)) {
-      hasProg = false;
-      break;
-    }
-  }
-
-  if (hasProg) {
-    condensedAssignees = condensedAssignees.filter((assignee) => {
-      return !prog.map((user) => user.id).includes(assignee);
-    });
-
-    condensedAssignees.push('&' + PROGRAMMING_ID);
-  }
-
-  const outreach = await db.query.users.findMany({
-    where: eq(users.subgroup, 'outreach'),
-    columns: {
-      id: true
-    }
-  });
-
-  let hasOutreach = true;
-
-  for (let i = 0; i < outreach.length; i++) {
-    if (!condensedAssignees.includes(outreach[i].id)) {
-      hasOutreach = false;
-      break;
-    }
-  }
-
-  if (hasOutreach) {
-    condensedAssignees = condensedAssignees.filter((assignee) => {
-      return !outreach.map((user) => user.id).includes(assignee);
-    });
-
-    condensedAssignees.push('&' + OUTREACH_ID);
-  }
-
-  const assigneeList = condensedAssignees.map((id, index) => `${index == condensedAssignees.length - 1 && condensedAssignees.length > 1 ? 'and ' : ''}<@${id}>`).join(', ');
+  const condensedAssignees = await condenseAssignees(assignees);
+  const assigneeList = condensedAssignees.map((id, index) => `${index == condensedAssignees.length - 1 && condensedAssignees.length > 1 ? 'and ' : ''}<@${id}>`).join(condensedAssignees.length > 2 ? ', ' : ' ');
 
   const messageId = await fetch(`https://discord.com/api/v9/channels/${TASK_CHANNEL}/messages`, {
     method: 'POST',
@@ -364,7 +292,7 @@ export const getResponse = async (message) => {
       'Authorization': `Bot ${config.DISCORD_TOKEN}`
     },
     body: JSON.stringify({
-      content: `The following ticket has been assigned to ${assigneeList} and is being supervised by <@${supervisorId}>:`,
+      content: `The following ticket has been assigned to ${assigneeList}, and is being supervised by <@${supervisorId}>:`,
       embeds: [
         {
           title: `**ID ${accessId}** ${title}`,
