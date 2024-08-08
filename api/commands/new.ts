@@ -3,7 +3,7 @@ import {
   InteractionResponseType
 } from 'discord-interactions';
 import { GetDb, MessageComponentTypes, TASK_CHANNEL, TextInputStyles } from '../utils';
-import { and, eq, ne } from 'drizzle-orm';
+import { and, asc, eq, ne } from 'drizzle-orm';
 import { assignments, tickets, users } from '../schema';
 import { config } from '../config';
 
@@ -217,16 +217,12 @@ export const getResponse = async (message) => {
   }).then((res) => res.json()).then((res: { id: string }) => res.id);
 
   const accessIds = await db.query.tickets.findMany({
-    where: {
-      status: ne('completed')
-    },
+    where: ne(tickets.status, 'completed'),
     columns: {
       accessId: true,
       status: true
     },
-    orderBy: {
-      accessId: 'asc'
-    }
+    orderBy: asc(tickets.accessId)
   });
 
   let accessId = 0;
